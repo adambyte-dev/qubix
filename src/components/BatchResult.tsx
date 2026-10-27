@@ -32,7 +32,7 @@ export default function BatchResult({ items, onReset }: BatchResultProps) {
       if (opt) {
         const a = document.createElement("a");
         a.href = opt.url;
-        a.download = `${item.data.title || "download"}.${opt.format}`;
+        a.download = `QUBIX_${item.data.title || "download"}.${opt.format}`;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
         document.body.appendChild(a);
@@ -170,7 +170,7 @@ export default function BatchResult({ items, onReset }: BatchResultProps) {
                 <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                   <a
                     href={opt.url}
-                    download={`${item.data.title || "download"}.${opt.format}`}
+                    download={`QUBIX_${item.data.title || "download"}.${opt.format}`}
                     className="px-3.5 py-2 bg-[#FFD028] hover:bg-[#FFE033] rounded-xl brutal-border text-xs font-black text-black flex items-center gap-1.5 brutal-btn"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

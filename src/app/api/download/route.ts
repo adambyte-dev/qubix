@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { detectPlatform } from "@/lib/constants";
 import { sanitizeUrl } from "@/lib/utils";
+import { verifyAntiScraper } from "@/lib/antiScraper";
 import { extractTikTokMedia } from "@/lib/extractors/tiktok";
 import { extractYouTubeMedia } from "@/lib/extractors/youtube";
 import { extractSocialMedia } from "@/lib/extractors/social";
 
 export async function POST(request: NextRequest) {
+  // Anti-scraper & Rate limiter check
+  const blocked = verifyAntiScraper(request, { maxReqPerMinute: 30, isApi: true });
+  if (blocked) return blocked;
+
   try {
     const body = await request.json();
     const rawUrl = body.url;

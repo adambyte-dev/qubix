@@ -166,8 +166,8 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
             {data.photos.map((photo, pIdx) => (
               <a
                 key={pIdx}
-                href={`/api/proxy?url=${encodeURIComponent(photo)}&name=photo-slide-${pIdx + 1}.jpg`}
-                download
+                href={`/api/proxy?url=${encodeURIComponent(photo)}&name=QUBIX_photo_slide_${pIdx + 1}.jpg`}
+                download={`QUBIX_photo_slide_${pIdx + 1}.jpg`}
                 className="group relative aspect-square rounded-xl overflow-hidden brutal-border bg-neutral-100 block"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

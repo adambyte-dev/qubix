@@ -241,7 +241,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Video Tanpa Watermark (HD)",
         quality: "HD 1080p MP4",
         format: "mp4" as const,
-        url: `/api/proxy?url=${encodeURIComponent(directVideoUrl)}&name=tiktok-nowm-${videoId || "media"}.mp4`,
+        url: `/api/proxy?url=${encodeURIComponent(directVideoUrl)}&name=QUBIX_tiktok_${videoId || "video"}.mp4`,
       });
     }
 
@@ -251,7 +251,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Audio Track Original (MP3)",
         quality: "Audio 320kbps",
         format: "mp3" as const,
-        url: `/api/proxy?url=${encodeURIComponent(directAudioUrl)}&name=tiktok-audio-${videoId || "sound"}.mp3`,
+        url: `/api/proxy?url=${encodeURIComponent(directAudioUrl)}&name=QUBIX_tiktok_audio_${videoId || "sound"}.mp3`,
       });
     }
 
@@ -261,7 +261,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Cover / Thumbnail HD",
         quality: "Original JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(coverThumb)}&name=tiktok-cover-${videoId || "img"}.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(coverThumb)}&name=QUBIX_tiktok_cover_${videoId || "img"}.jpg`,
       });
     }
 

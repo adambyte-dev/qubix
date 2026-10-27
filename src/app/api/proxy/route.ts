@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyAntiScraper } from "@/lib/antiScraper";
 
 export async function GET(request: NextRequest) {
+  // Anti-scraper & Rate limiter check
+  const blocked = verifyAntiScraper(request, { maxReqPerMinute: 60, isApi: false });
+  if (blocked) return blocked;
+
   const { searchParams } = new URL(request.url);
   const targetUrl = searchParams.get("url");
   const filename = searchParams.get("name") || "download";
@@ -76,7 +81,12 @@ export async function GET(request: NextRequest) {
     }
 
     // ponytail: stream upstreamRes.body directly to avoid buffering big files in server RAM; upgrade to chunked transformer if on-the-fly transcoding needed
-    const safeFilename = filename.replace(/[^a-zA-Z0-9_.-]/g, "_");
+    let cleanName = filename.replace(/[^a-zA-Z0-9_.-]/g, "_");
+    if (!cleanName.toLowerCase().startsWith("qubix")) {
+      cleanName = `QUBIX_${cleanName}`;
+    }
+    const safeFilename = cleanName;
+
     const resHeaders: Record<string, string> = {
       "Content-Type": contentType,
       "Content-Disposition": `attachment; filename="${safeFilename}"`,

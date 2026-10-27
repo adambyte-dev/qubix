@@ -41,7 +41,7 @@ export async function extractSocialMedia(url: string, platform: SupportedPlatfor
         label: "Video Original (HD)",
         quality: "HD Stream",
         format: "mp4" as const,
-        url: `/api/proxy?url=${encodeURIComponent(mediaVideo)}&name=${platform}-video.mp4`,
+        url: `/api/proxy?url=${encodeURIComponent(mediaVideo)}&name=QUBIX_${platform}_video.mp4`,
       });
     }
 
@@ -50,7 +50,7 @@ export async function extractSocialMedia(url: string, platform: SupportedPlatfor
         label: "Media / Cover Gambar (HD)",
         quality: "High Resolution",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(mediaThumb)}&name=${platform}-media.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(mediaThumb)}&name=QUBIX_${platform}_media.jpg`,
       });
     }
 

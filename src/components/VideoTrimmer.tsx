@@ -196,10 +196,10 @@ export default function VideoTrimmer({
       if (!stream || typeof MediaRecorder === "undefined") {
         const safeStart = Math.floor(startTime);
         const safeEnd = Math.floor(endTime);
-        const proxyUrl = `/api/proxy?url=${encodeURIComponent(videoUrl)}&name=clip-${safeStart}s-to-${safeEnd}s.mp4#t=${safeStart},${safeEnd}`;
+        const proxyUrl = `/api/proxy?url=${encodeURIComponent(videoUrl)}&name=QUBIX_clip_${safeStart}s_to_${safeEnd}s.mp4#t=${safeStart},${safeEnd}`;
         const a = document.createElement("a");
         a.href = proxyUrl;
-        a.download = `qubix-clip-${safeStart}s-${safeEnd}s.mp4`;
+        a.download = `QUBIX_clip_${safeStart}s_${safeEnd}s.mp4`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -222,7 +222,7 @@ export default function VideoTrimmer({
         const a = document.createElement("a");
         a.href = url;
         const ext = recorder.mimeType.includes("mp4") ? "mp4" : "webm";
-        a.download = `qubix-clip-${Math.floor(startTime)}s-${Math.floor(endTime)}s.${ext}`;
+        a.download = `QUBIX_clip_${Math.floor(startTime)}s_${Math.floor(endTime)}s.${ext}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

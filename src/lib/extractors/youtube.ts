@@ -50,13 +50,13 @@ export async function extractYouTubeMedia(url: string): Promise<MediaResponse> {
         label: "Cover Thumbnail Ultra HD (1080p)",
         quality: "1920x1080 Full HD JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(maxResThumb)}&name=youtube-${videoId}-1080p.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(maxResThumb)}&name=QUBIX_youtube_${videoId}_1080p.jpg`,
       },
       {
         label: "Cover Thumbnail High Quality",
         quality: "640x480 HQ JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(hqThumb)}&name=youtube-${videoId}-hq.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(hqThumb)}&name=QUBIX_youtube_${videoId}_hq.jpg`,
       },
     ];
 
