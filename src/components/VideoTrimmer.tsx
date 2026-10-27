@@ -29,8 +29,32 @@ export default function VideoTrimmer({
   const [endTime, setEndTime] = useState<number>(30);
   const [draggingHandle, setDraggingHandle] = useState<"start" | "end" | null>(null);
 
+  const [speed, setSpeed] = useState<number>(1);
+  const [exportMode, setExportMode] = useState<"video" | "ringtone">("video");
+
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [exportProgress, setExportProgress] = useState<number>(0);
+
+  // Capture current video frame as Full HD JPG
+  const handleCaptureFrame = () => {
+    if (!videoRef.current) return;
+    const v = videoRef.current;
+    const canvas = document.createElement("canvas");
+    canvas.width = v.videoWidth || 1280;
+    canvas.height = v.videoHeight || 720;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+    const a = document.createElement("a");
+    a.download = `QUBIX_frame_${Math.floor(v.currentTime)}s.jpg`;
+    a.href = canvas.toDataURL("image/jpeg", 0.95);
+    a.click();
+  };
+
+  const handleSpeedChange = (newSpeed: number) => {
+    setSpeed(newSpeed);
+    if (videoRef.current) videoRef.current.playbackRate = newSpeed;
+  };
 
   // Format seconds to mm:ss
   const formatTime = (seconds: number): string => {
@@ -222,7 +246,8 @@ export default function VideoTrimmer({
         const a = document.createElement("a");
         a.href = url;
         const ext = recorder.mimeType.includes("mp4") ? "mp4" : "webm";
-        a.download = `QUBIX_clip_${Math.floor(startTime)}s_${Math.floor(endTime)}s.${ext}`;
+        const prefix = exportMode === "ringtone" ? "QUBIX_ringtone" : "QUBIX_clip";
+        a.download = `${prefix}_${Math.floor(startTime)}s_${Math.floor(endTime)}s.${ext}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -355,6 +380,36 @@ export default function VideoTrimmer({
             <span className="text-neutral-500"> / </span>
             <span>{formatTime(duration)}</span>
           </div>
+
+          {/* Speed Selector */}
+          <div className="flex items-center gap-1 bg-black/60 p-1 rounded-lg brutal-border">
+            {[0.5, 1, 1.5, 2].map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => handleSpeedChange(s)}
+                className={`px-1.5 py-0.5 rounded text-[10px] font-black ${
+                  speed === s ? "bg-[#FFD028] text-black" : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                {s}x
+              </button>
+            ))}
+          </div>
+
+          {/* HD Frame Wallpaper Grabber Button */}
+          <button
+            type="button"
+            onClick={handleCaptureFrame}
+            title="Ambil Foto Frame HD dari video di detik ini"
+            className="px-2.5 py-1.5 bg-[#FFD028] hover:bg-[#ffe033] text-black rounded-lg brutal-border text-xs font-black flex items-center gap-1.5"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="hidden sm:inline">Foto HD</span>
+          </button>
 
           <button
             type="button"
@@ -515,10 +570,27 @@ export default function VideoTrimmer({
         </div>
       </div>
 
-      {/* Export Button */}
+      {/* Export Format & Button */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-        <div className="text-xs text-neutral-400 font-medium text-center sm:text-left">
-          Rentang: <strong className="text-white">{formatTime(startTime)}</strong> sampai <strong className="text-white">{formatTime(endTime)}</strong> (Durasi: {Math.round(clipLength)} detik).
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setExportMode("video")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-black brutal-border ${
+              exportMode === "video" ? "bg-[#FFD028] text-black" : "bg-neutral-800 text-neutral-400 hover:text-white"
+            }`}
+          >
+            🎬 Klip Video
+          </button>
+          <button
+            type="button"
+            onClick={() => setExportMode("ringtone")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-black brutal-border ${
+              exportMode === "ringtone" ? "bg-[#FF3377] text-white" : "bg-neutral-800 text-neutral-400 hover:text-white"
+            }`}
+          >
+            🎵 Nada Dering MP3
+          </button>
         </div>
 
         <button
@@ -533,14 +605,16 @@ export default function VideoTrimmer({
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
-              <span>Memproses Klip... ({exportProgress}%)</span>
+              <span>Memproses {exportMode === "ringtone" ? "Nada Dering" : "Klip"}... ({exportProgress}%)</span>
             </>
           ) : (
             <>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span>Unduh Klip ({formatTime(startTime)} - {formatTime(endTime)})</span>
+              <span>
+                Unduh {exportMode === "ringtone" ? "Nada Dering" : "Klip"} ({formatTime(startTime)} - {formatTime(endTime)})
+              </span>
             </>
           )}
         </button>
