@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qubix.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qubix-two.vercel.app"),
   title: "QUBIX — All-in-One Media Downloader",
   description:
     "Unduh video TikTok tanpa watermark, foto profil (PP) TikTok HD, YouTube 4K, audio MP3, dan potong durasi video secepat kilat.",
