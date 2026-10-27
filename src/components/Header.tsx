@@ -1,16 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
 
 export default function Header() {
   const [copied, setCopied] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [showInstallGuide, setShowInstallGuide] = useState(false);
+
+  useEffect(() => {
+    // Register Service Worker for PWA
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+
+    // Check if running in standalone mode (no browser UI)
+    if (typeof window !== "undefined") {
+      if (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as unknown as { standalone?: boolean }).standalone === true
+      ) {
+        setIsInstalled(true);
+      }
+
+      const handleBeforeInstall = (e: Event) => {
+        e.preventDefault();
+        setDeferredPrompt(e as BeforeInstallPromptEvent);
+      };
+
+      window.addEventListener("beforeinstallprompt", handleBeforeInstall);
+      return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+    }
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
+        setIsInstalled(true);
+        setDeferredPrompt(null);
+      }
+    } else {
+      setShowInstallGuide(true);
+    }
+  };
 
   const handleShare = async () => {
     const shareData = {
       title: "QUBIX — All-in-One Media Downloader",
       text: "Unduh video TikTok tanpa watermark, foto profil HD, YouTube 4K, dan potong video gratis!",
-      url: typeof window !== "undefined" ? window.location.href : "https://qubix.app",
+      url: typeof window !== "undefined" ? window.location.href : "https://qubix.ktexucoder.online",
     };
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -61,8 +107,23 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Right Badges & Share Button */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right Action Buttons */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* PWA Standalone Install Button */}
+          {!isInstalled && (
+            <button
+              type="button"
+              onClick={handleInstallClick}
+              title="Unduh & Pasang Aplikasi Layar Penuh (Tanpa Browser Bar)"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-[#4ADE80] hover:bg-[#34D399] text-black text-xs font-black rounded-xl brutal-border brutal-shadow-sm transition-transform active:translate-x-0.5 active:translate-y-0.5"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Unduh App</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleShare}
@@ -85,6 +146,55 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {/* PWA Install Guide Modal (Mobile & Safari Fallback) */}
+      {showInstallGuide && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-sm w-full p-6 brutal-border-thick brutal-shadow-xl text-black">
+            <div className="flex items-center justify-between pb-3 border-b-2 border-black mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 bg-[#4ADE80] rounded-full brutal-border"></span>
+                <h3 className="font-black text-base">Pasang Aplikasi QUBIX</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowInstallGuide(false)}
+                className="w-7 h-7 rounded-lg bg-neutral-100 hover:bg-neutral-200 brutal-border text-xs font-black flex items-center justify-center"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs font-bold text-neutral-600 mb-4">
+              Jalankan QUBIX di HP atau Laptop Anda dalam <strong>mode aplikasi penuh tanpa bilah browser (tanpa URL bar)</strong>:
+            </p>
+
+            <div className="space-y-3 text-xs font-bold">
+              <div className="p-3 bg-[#FFFDEB] rounded-xl brutal-border">
+                <div className="font-black text-black mb-1">📱 Android / Chrome:</div>
+                <p className="text-neutral-700">
+                  Ketuk titik tiga (⋮) di pojok kanan atas browser Chrome, lalu pilih <strong>&quot;Pasang Aplikasi&quot;</strong> atau <strong>&quot;Tambah ke Layar Utama&quot;</strong>.
+                </p>
+              </div>
+
+              <div className="p-3 bg-[#FFF1F2] rounded-xl brutal-border">
+                <div className="font-black text-black mb-1">🍎 iPhone / Safari:</div>
+                <p className="text-neutral-700">
+                  Ketuk tombol Bagikan (ikon kotak panah ke atas <span className="font-mono">⎋</span>) di bawah Safari, lalu gulir dan pilih <strong>&quot;Tambah ke Layar Utama&quot;</strong>.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowInstallGuide(false)}
+              className="w-full mt-5 py-3 bg-[#FFD028] hover:bg-[#FFE033] text-black font-black text-xs rounded-xl brutal-btn text-center"
+            >
+              Saya Mengerti
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
