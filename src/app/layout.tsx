@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "Unduh video TikTok tanpa watermark, foto profil (PP) TikTok HD, YouTube 4K, audio MP3, dan potong durasi video secepat kilat.",
   authors: [{ name: "Muhammad Adam Hidayat (adambyte-dev)", url: "https://github.com/adambyte-dev" }],
   creator: "adambyte-dev",
+  verification: {
+    google: "googleccdd65e544dc2b73",
+  },
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
