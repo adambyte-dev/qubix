@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MediaResponse, DownloadOption } from "@/types";
+import { triggerDirectAd } from "@/lib/ad";
 import QrModal from "./QrModal";
 import VideoTrimmer from "./VideoTrimmer";
 
@@ -168,6 +169,7 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
                 key={pIdx}
                 href={`/api/proxy?url=${encodeURIComponent(photo)}&name=QUBIX_photo_slide_${pIdx + 1}.jpg`}
                 download={`QUBIX_photo_slide_${pIdx + 1}.jpg`}
+                onClick={triggerDirectAd}
                 className="group relative aspect-square rounded-xl overflow-hidden brutal-border bg-neutral-100 block"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -254,6 +256,7 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
                 <a
                   href={dl.url}
                   download
+                  onClick={triggerDirectAd}
                   className="px-3 py-1.5 bg-black text-white text-xs font-black rounded-lg flex items-center gap-1.5 hover:bg-neutral-800"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

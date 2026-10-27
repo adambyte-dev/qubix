@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { MediaResponse } from "@/types";
+import { triggerDirectAd } from "@/lib/ad";
 
 export interface BatchItem {
   id: string;
@@ -25,6 +26,7 @@ export default function BatchResult({ items, onReset }: BatchResultProps) {
   const isFinished = items.every((i) => i.status !== "loading");
 
   const handleDownloadAll = async () => {
+    triggerDirectAd();
     setDownloadingAll(true);
     for (const item of successItems) {
       if (!item.data) continue;
@@ -171,6 +173,7 @@ export default function BatchResult({ items, onReset }: BatchResultProps) {
                   <a
                     href={opt.url}
                     download={`QUBIX_${item.data.title || "download"}.${opt.format}`}
+                    onClick={triggerDirectAd}
                     className="px-3.5 py-2 bg-[#FFD028] hover:bg-[#FFE033] rounded-xl brutal-border text-xs font-black text-black flex items-center gap-1.5 brutal-btn"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
