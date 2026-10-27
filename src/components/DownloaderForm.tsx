@@ -73,6 +73,9 @@ interface DownloaderFormProps {
   onProfilePlatformChange: (p: "tiktok" | "instagram" | "twitter") => void;
   onSubmit: (input: string) => void;
   isLoading: boolean;
+  heroHeading?: string;
+  heroHighlight?: string;
+  heroSubtitle?: string;
 }
 
 export default function DownloaderForm({
@@ -82,6 +85,9 @@ export default function DownloaderForm({
   onProfilePlatformChange,
   onSubmit,
   isLoading,
+  heroHeading,
+  heroHighlight,
+  heroSubtitle,
 }: DownloaderFormProps) {
   const [inputVal, setInputVal] = useState("");
   const [hasClipboard, setHasClipboard] = useState(false);
@@ -115,10 +121,10 @@ export default function DownloaderForm({
       {/* Tuckii Signature Bold Headline */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-black tracking-tight leading-[1.08]">
-          Download Anything.
+          {heroHeading || "Download Anything."}
           <br />
           <span className="inline-block relative">
-            <span className="relative z-10">No Watermark.</span>
+            <span className="relative z-10">{heroHighlight || "No Watermark."}</span>
             <span
               className="absolute left-0 bottom-1 w-full h-4 sm:h-5 bg-[#FFD028] -z-0 rounded-xs"
               aria-hidden="true"
@@ -126,7 +132,8 @@ export default function DownloaderForm({
           </span>
         </h1>
         <p className="mt-3 text-sm sm:text-base font-bold text-neutral-600 max-w-xl">
-          Unduh video TikTok tanpa watermark, foto profil HD, audio MP3, potong durasi klip, dan media sosial lainnya dalam satu platform.
+          {heroSubtitle ||
+            "Unduh video TikTok tanpa watermark, foto profil HD, audio MP3, potong durasi klip, dan media sosial lainnya dalam satu platform."}
         </p>
       </div>
 

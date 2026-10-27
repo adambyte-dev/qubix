@@ -14,8 +14,20 @@ import { MediaResponse, TikTokProfileResponse, HistoryItem } from "@/types";
 
 const HISTORY_KEY = "qubix_download_history_v1";
 
-export default function Home() {
-  const [mode, setMode] = useState<"media" | "profile" | "batch">("media");
+export interface HomeProps {
+  initialMode?: "media" | "profile" | "batch";
+  heroHeading?: string;
+  heroHighlight?: string;
+  heroSubtitle?: string;
+}
+
+export default function Home({
+  initialMode = "media",
+  heroHeading,
+  heroHighlight,
+  heroSubtitle,
+}: HomeProps = {}) {
+  const [mode, setMode] = useState<"media" | "profile" | "batch">(initialMode);
   const [profilePlatform, setProfilePlatform] = useState<"tiktok" | "instagram" | "twitter">("tiktok");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -197,6 +209,9 @@ export default function Home() {
           onProfilePlatformChange={(p) => setProfilePlatform(p)}
           onSubmit={(input) => handleFetch(input, mode)}
           isLoading={isLoading}
+          heroHeading={heroHeading}
+          heroHighlight={heroHighlight}
+          heroSubtitle={heroSubtitle}
         />
 
         {/* Error Alert Banner */}
