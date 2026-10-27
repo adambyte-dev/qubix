@@ -179,12 +179,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F5F4EE] flex flex-col justify-between selection:bg-[#FFD028] selection:text-black">
+    <div className="min-h-screen w-full bg-[#F5F4EE] flex flex-col justify-between selection:bg-[#FFD028] selection:text-black overflow-x-hidden">
       {/* Top Navbar */}
       <Header />
 
       {/* Main Web Content */}
-      <main className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex-1">
+      <main className="w-full max-w-4xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10 flex-1 overflow-x-hidden">
         {/* Hero & Input Section */}
         <DownloaderForm
           mode={mode}

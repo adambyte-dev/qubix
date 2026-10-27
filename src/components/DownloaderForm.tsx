@@ -114,7 +114,7 @@ export default function DownloaderForm({
     <div className="w-full max-w-3xl mx-auto text-center sm:text-left">
       {/* Tuckii Signature Bold Headline */}
       <div className="mb-8">
-        <h1 className="text-4xl sm:text-6xl font-black text-black tracking-tight leading-[1.05]">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-black tracking-tight leading-[1.08]">
           Download Anything.
           <br />
           <span className="inline-block relative">
@@ -135,46 +135,46 @@ export default function DownloaderForm({
         <button
           type="button"
           onClick={() => onModeChange("media")}
-          className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 ${
+          className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 sm:gap-2 ${
             mode === "media"
               ? "bg-[#FFD028] text-black brutal-border brutal-shadow-sm"
               : "bg-white text-neutral-700 brutal-border hover:bg-neutral-100"
           }`}
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
           </svg>
-          <span>Multi Media (Video / Audio / Slide)</span>
+          <span>Multi Media <span className="hidden sm:inline">(Video / Audio / Slide)</span></span>
         </button>
 
         <button
           type="button"
           onClick={() => onModeChange("profile")}
-          className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 ${
+          className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 sm:gap-2 ${
             mode === "profile"
               ? "bg-[#FF3377] text-white brutal-border brutal-shadow-sm"
               : "bg-white text-neutral-700 brutal-border hover:bg-neutral-100"
           }`}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-          <span>Foto Profil (PP HD)</span>
+          <span>Foto Profil <span className="hidden sm:inline">(PP HD)</span></span>
         </button>
 
         <button
           type="button"
           onClick={() => onModeChange("batch")}
-          className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 ${
+          className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 sm:gap-2 ${
             mode === "batch"
               ? "bg-[#4ADE80] text-black brutal-border brutal-shadow-sm"
               : "bg-white text-neutral-700 brutal-border hover:bg-neutral-100"
           }`}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
-          <span>Batch Multi-Link</span>
+          <span>Batch <span className="hidden sm:inline">Multi-Link</span></span>
         </button>
       </div>
 
