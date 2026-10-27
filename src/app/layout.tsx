@@ -37,6 +37,10 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://qubix.ktexucoder.online",
+    languages: {
+      "id-ID": "https://qubix.ktexucoder.online",
+      "en-US": "https://qubix.ktexucoder.online",
+    },
   },
   robots: {
     index: true,
