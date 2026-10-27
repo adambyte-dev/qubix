@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qubix-two.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qubix.ktexucoder.online"),
   title: "QUBIX — All-in-One Media Downloader | Download TikTok Tanpa Watermark & YouTube HD",
   description:
     "Unduh video TikTok tanpa watermark, foto profil (PP) TikTok HD, YouTube 4K, audio MP3 320kbps, Instagram Reels, dan potong durasi video secepat kilat gratis.",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "soundcloud mp3 download",
   ],
   alternates: {
-    canonical: "https://qubix-two.vercel.app",
+    canonical: "https://qubix.ktexucoder.online",
   },
   robots: {
     index: true,
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "QUBIX — All-in-One Media Downloader | No Watermark HD",
     description:
       "Unduh video TikTok tanpa watermark, foto profil HD 1080p, YouTube 4K, audio MP3 320kbps, dan potong video.",
-    url: "https://qubix-two.vercel.app",
+    url: "https://qubix.ktexucoder.online",
     siteName: "QUBIX",
     images: [
       {
@@ -91,9 +91,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://qubix-two.vercel.app/#webapp",
+      "@id": "https://qubix.ktexucoder.online/#webapp",
       name: "QUBIX",
-      url: "https://qubix-two.vercel.app",
+      url: "https://qubix.ktexucoder.online",
       description:
         "Unduh video TikTok tanpa watermark, foto profil HD 1080p, YouTube 4K, audio MP3 320kbps, dan potong video secepat kilat.",
       applicationCategory: "MultimediaApplication",
@@ -106,7 +106,7 @@ const jsonLd = {
     },
     {
       "@type": "FAQPage",
-      "@id": "https://qubix-two.vercel.app/#faq",
+      "@id": "https://qubix.ktexucoder.online/#faq",
       mainEntity: [
         {
           "@type": "Question",

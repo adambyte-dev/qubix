@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SLUG_CONFIGS } from "@/lib/slugs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://qubix-two.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qubix.ktexucoder.online";
   const now = new Date();
 
   const slugEntries: MetadataRoute.Sitemap = Object.keys(SLUG_CONFIGS).map((slug) => ({

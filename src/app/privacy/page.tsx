@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Kebijakan Privasi (Privacy Policy) | QUBIX",
   description: "Kebijakan privasi resmi penggunaan layanan pengunduh media QUBIX dan kepatuhan periklanan Google AdSense.",
   alternates: {
-    canonical: "https://qubix-two.vercel.app/privacy",
+    canonical: "https://qubix.ktexucoder.online/privacy",
   },
 };
 

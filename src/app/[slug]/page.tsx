@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const config = SLUG_CONFIGS[slug];
   if (!config) return {};
 
-  const url = `https://qubix-two.vercel.app/${slug}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qubix.ktexucoder.online";
+  const url = `${baseUrl}/${slug}`;
 
   return {
     title: `${config.title} | QUBIX`,
@@ -58,7 +59,8 @@ export default async function ProgrammaticPage({ params }: PageProps) {
     notFound();
   }
 
-  const pageUrl = `https://qubix-two.vercel.app/${config.slug}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qubix.ktexucoder.online";
+  const pageUrl = `${baseUrl}/${config.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -111,7 +113,7 @@ export default async function ProgrammaticPage({ params }: PageProps) {
             "@type": "ListItem",
             position: 1,
             name: "Beranda",
-            item: "https://qubix-two.vercel.app",
+            item: baseUrl,
           },
           {
             "@type": "ListItem",

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Ketentuan Layanan & DMCA | QUBIX",
   description: "Syarat dan ketentuan layanan serta pernyataan DMCA resmi untuk pengguna QUBIX Downloader.",
   alternates: {
-    canonical: "https://qubix-two.vercel.app/terms",
+    canonical: "https://qubix.ktexucoder.online/terms",
   },
 };
 

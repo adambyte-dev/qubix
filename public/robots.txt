@@ -7,4 +7,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://qubix-two.vercel.app/sitemap.xml
+Sitemap: https://qubix.ktexucoder.online/sitemap.xml
