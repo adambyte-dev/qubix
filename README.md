@@ -122,7 +122,7 @@ qubix/
 
 1. **Masuk ke direktori proyek**:
    ```bash
-   cd qoder
+   cd qubix
    ```
 
 2. **Pasang dependensi**:
