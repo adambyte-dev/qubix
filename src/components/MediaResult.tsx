@@ -15,6 +15,7 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
   const [showEditor, setShowEditor] = useState(false);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [isTitleExpanded, setIsTitleExpanded] = useState(false);
 
   const handleCopy = (url: string, idx: number) => {
     const fullUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`;
@@ -145,9 +146,24 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
           )}
 
           <div className="flex-1 min-w-0">
-            <h3 className="text-xl sm:text-2xl font-black text-black leading-snug">
-              {data.title || "Media Siap Diunduh"}
-            </h3>
+            <div>
+              <h3
+                className={`text-base sm:text-xl font-black text-black leading-snug break-words ${
+                  isTitleExpanded ? "" : "line-clamp-2 sm:line-clamp-3"
+                }`}
+              >
+                {data.title || "Media Siap Diunduh"}
+              </h3>
+              {data.title && data.title.length > 80 && (
+                <button
+                  type="button"
+                  onClick={() => setIsTitleExpanded(!isTitleExpanded)}
+                  className="mt-1 text-xs font-black text-neutral-500 hover:text-black underline transition-colors"
+                >
+                  {isTitleExpanded ? "▲ Sembunyikan Deskripsi" : "▼ Baca Selengkapnya..."}
+                </button>
+              )}
+            </div>
 
             {data.author && (
               <div className="flex items-center gap-2.5 mt-3">
