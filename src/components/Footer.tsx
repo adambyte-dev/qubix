@@ -46,9 +46,20 @@ export default function Footer() {
             </p>
           </div>
 
-          <p className="text-xs font-bold text-neutral-500">
-            © 2026 QUBIX. Unduh media sosial cepat, aman, dan tanpa watermark.
-          </p>
+          <div className="flex flex-col items-center md:items-end gap-1.5">
+            <div className="flex items-center gap-3 text-xs font-black">
+              <Link href="/privacy" className="hover:underline hover:text-[#FF3377]">
+                Kebijakan Privasi
+              </Link>
+              <span>•</span>
+              <Link href="/terms" className="hover:underline hover:text-[#FF3377]">
+                Syarat & DMCA
+              </Link>
+            </div>
+            <p className="text-xs font-bold text-neutral-500">
+              © 2026 QUBIX. Unduh media sosial cepat, aman, dan tanpa watermark.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

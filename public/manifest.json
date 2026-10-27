@@ -1,0 +1,21 @@
+{
+  "name": "QUBIX — All-in-One Media Downloader",
+  "short_name": "QUBIX",
+  "description": "Unduh video TikTok tanpa watermark, foto profil HD, YouTube 4K, dan MP3 gratis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F4EE",
+  "theme_color": "#FFD028",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

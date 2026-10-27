@@ -53,6 +53,7 @@ export const metadata: Metadata = {
   verification: {
     google: "googleccdd65e544dc2b73",
   },
+  manifest: "/manifest.json",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
