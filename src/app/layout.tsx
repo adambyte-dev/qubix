@@ -14,9 +14,40 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qubix-two.vercel.app"),
-  title: "QUBIX — All-in-One Media Downloader",
+  title: "QUBIX — All-in-One Media Downloader | Download TikTok Tanpa Watermark & YouTube HD",
   description:
-    "Unduh video TikTok tanpa watermark, foto profil (PP) TikTok HD, YouTube 4K, audio MP3, dan potong durasi video secepat kilat.",
+    "Unduh video TikTok tanpa watermark, foto profil (PP) TikTok HD, YouTube 4K, audio MP3 320kbps, Instagram Reels, dan potong durasi video secepat kilat gratis.",
+  keywords: [
+    "tiktok downloader",
+    "download video tiktok tanpa watermark",
+    "snaptik",
+    "ssstiktok",
+    "download video youtube",
+    "youtube mp3",
+    "instagram reels downloader",
+    "download foto profil tiktok hd",
+    "video trimmer online",
+    "batch video downloader",
+    "qubix",
+    "unduh video tiktok hd",
+    "pinterest video downloader",
+    "capcut template download",
+    "soundcloud mp3 download",
+  ],
+  alternates: {
+    canonical: "https://qubix-two.vercel.app",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   authors: [{ name: "Muhammad Adam Hidayat (adambyte-dev)", url: "https://github.com/adambyte-dev" }],
   creator: "adambyte-dev",
   verification: {
@@ -28,10 +59,10 @@ export const metadata: Metadata = {
     apple: "/icon.png",
   },
   openGraph: {
-    title: "QUBIX — All-in-One Media Downloader",
+    title: "QUBIX — All-in-One Media Downloader | No Watermark HD",
     description:
       "Unduh video TikTok tanpa watermark, foto profil HD 1080p, YouTube 4K, audio MP3 320kbps, dan potong video.",
-    url: "/",
+    url: "https://qubix-two.vercel.app",
     siteName: "QUBIX",
     images: [
       {
@@ -53,6 +84,57 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://qubix-two.vercel.app/#webapp",
+      name: "QUBIX",
+      url: "https://qubix-two.vercel.app",
+      description:
+        "Unduh video TikTok tanpa watermark, foto profil HD 1080p, YouTube 4K, audio MP3 320kbps, dan potong video secepat kilat.",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://qubix-two.vercel.app/#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Bagaimana cara download video TikTok tanpa watermark di QUBIX?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Buka aplikasi TikTok, salin tautan video yang ingin Anda simpan, lalu tempelkan ke kotak input QUBIX. Klik Unduh, lalu pilih Video Tanpa Watermark (HD).",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Apakah QUBIX gratis?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "QUBIX 100% gratis tanpa batasan kuota harian. Anda tidak perlu login atau mendaftar akun.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Platform apa saja yang didukung?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "TikTok, YouTube, Instagram Reels, Twitter/X, Facebook, Pinterest, CapCut, Threads, dan SoundCloud.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,6 +154,11 @@ export default function RootLayout({
         />
         {/* Google AdSense Meta Tag Verification Method */}
         <meta name="google-adsense-account" content="ca-pub-3315503406511623" />
+        {/* JSON-LD Schema Markup */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#FBFBF9] text-black overflow-x-hidden">
         {children}

@@ -8,6 +8,7 @@ import MediaResult from "@/components/MediaResult";
 import ProfileResult from "@/components/ProfileResult";
 import BatchResult, { BatchItem } from "@/components/BatchResult";
 import HistoryDrawer from "@/components/HistoryDrawer";
+import SeoContent from "@/components/SeoContent";
 import Footer from "@/components/Footer";
 import { MediaResponse, TikTokProfileResponse, HistoryItem } from "@/types";
 
@@ -252,6 +253,9 @@ export default function Home() {
             onClear={handleClearHistory}
           />
         </div>
+
+        {/* SEO Long-form Content & FAQs */}
+        <SeoContent />
       </main>
 
       {/* Footer */}
