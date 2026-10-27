@@ -1,6 +1,6 @@
 # 🎖️ Credits & Acknowledgments
 
-Proyek **QODER** (sebelumnya *QUBIX*) dibangun secara terbuka dengan dedikasi pada performa, kesederhanaan, dan estetika web modern.
+Proyek **QUBIX** dibangun secara terbuka dengan dedikasi pada performa, kesederhanaan, dan estetika web modern.
 
 ---
 
@@ -13,7 +13,7 @@ Proyek **QODER** (sebelumnya *QUBIX*) dibangun secara terbuka dengan dedikasi pa
 
 ### 🎨 Desain & Inspirasi Visual
 * **Tuckii (Neo-Brutalism Mobile App UI Design)**  
-  Konsep tab folder berkontras tinggi, border tebal hitam (*brutal-border*), dan hard drop shadow yang mendasari bahasa visual QODER.
+  Konsep tab folder berkontras tinggi, border tebal hitam (*brutal-border*), dan hard drop shadow yang mendasari bahasa visual QUBIX.
 
 ---
 

@@ -1,8 +1,8 @@
-# 📦 QODER — Universal Multi-Platform Media Downloader
+# 📦 QUBIX — Universal Multi-Platform Media Downloader
 
 <div align="center">
 
-![QUBIX / QODER Banner](public/og-image.png)
+![QUBIX Banner](public/og-image.png)
 
 <p align="center">
   <strong>Solusi modern pengunduh media sosial multi-platform berkinerja tinggi dengan antarmuka Neo-Brutalism dan arsitektur scraping mandiri murni (Pure 0-API).</strong>
@@ -21,7 +21,7 @@
 
 ## 🌟 Ikhtisar Proyek
 
-**QODER** (sebelumnya *QUBIX*) dirancang dari awal untuk memecahkan masalah umum website downloader: **ketergantungan pada API pihak ketiga berbayar / tidak stabil, kebocoran memori RAM server, dan iklan yang mengganggu**. 
+**QUBIX** dirancang dari awal untuk memecahkan masalah umum website downloader: **ketergantungan pada API pihak ketiga berbayar / tidak stabil, kebocoran memori RAM server, dan iklan yang mengganggu**. 
 
 Dengan arsitektur **Pure Native Scraper**, seluruh parsing metadata, bypass header CDN, dan pengunduhan stream diproses langsung di Next.js App Router secara mandiri tanpa pihak perantara.
 
@@ -75,7 +75,7 @@ Ambil foto profil akun media sosial dalam resolusi aslinya (1080x1080) hanya den
 ## 📁 Struktur Direktori
 
 ```text
-qoder/
+qubix/
 ├── public/
 │   ├── icon.png                 # App icon & favicon resolusi tinggi
 │   ├── logo.png                 # Logo resmi transparan
