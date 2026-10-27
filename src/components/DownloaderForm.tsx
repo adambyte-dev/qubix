@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { detectPlatform } from "@/lib/constants";
+import { triggerDirectAd } from "@/lib/ad";
 
 function PlatformInputIcon({
   mode,
@@ -112,6 +113,7 @@ export default function DownloaderForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputVal.trim() && !isLoading) {
+      triggerDirectAd();
       onSubmit(inputVal.trim());
     }
   };
