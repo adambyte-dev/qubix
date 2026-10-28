@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradMask" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFDD33"/>
+      <stop offset="100%" stop-color="#FFC000"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Full Bleed Background for Android Adaptive Masking -->
+  <rect width="512" height="512" fill="url(#bgGradMask)"/>
+
+  <!-- Centered Scaled 3D Isometric Cube within Android Safe Zone (80%) -->
+  <g transform="translate(256, 252) scale(0.82)">
+    <g stroke="#000000" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+      <!-- Top Face -->
+      <path d="M 0,-115 L 110,-52 L 0,10 L -110,-52 Z" fill="#FFFFFF"/>
+      <!-- Left Dark Face -->
+      <path d="M -110,-52 L 0,10 L 0,135 L -110,72 Z" fill="#18181B"/>
+      <!-- Right Golden Face -->
+      <path d="M 0,10 L 110,-52 L 110,72 L 0,135 Z" fill="#EAB308"/>
+
+      <!-- Grid Cuts on Top Face -->
+      <path d="M -55,-21 L 55,-83" stroke="#E4E4E7" stroke-width="6"/>
+      <path d="M 55,-21 L -55,-83" stroke="#E4E4E7" stroke-width="6"/>
+
+      <!-- Dynamic Download Arrow -->
+      <path d="M 0,-40 L 0,55" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>
+      <path d="M -36,20 L 0,56 L 36,20" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 0,-40 L 0,55" stroke="#000000" stroke-width="14" stroke-linecap="round"/>
+      <path d="M -36,20 L 0,56 L 36,20" fill="none" stroke="#000000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Base Tray Accent -->
+      <path d="M -65,95 L 0,132 L 65,95" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+    </g>
+
+    <!-- Q Accent Tag -->
+    <rect x="90" y="115" width="55" height="24" rx="7" fill="#000000" transform="rotate(32 90 115)"/>
+    <rect x="94" y="118" width="45" height="16" rx="4" fill="#FFD028" transform="rotate(32 90 115)"/>
+  </g>
+</svg>

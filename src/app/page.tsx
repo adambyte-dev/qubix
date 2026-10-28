@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import DownloaderForm from "@/components/DownloaderForm";
 import PlatformCards from "@/components/PlatformCards";
@@ -214,22 +215,42 @@ export default function Home({
           heroSubtitle={heroSubtitle}
         />
 
-        {/* Loading Indicator for Mobile & Desktop */}
+        {/* Modern App Loading UI for Mobile & Desktop */}
         {isLoading && (
           <div className="w-full max-w-3xl mx-auto mt-6">
-            <div className="bg-white rounded-2xl p-6 brutal-border-thick brutal-shadow flex flex-col items-center justify-center text-center gap-3">
-              <div className="relative w-12 h-12 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-4 border-neutral-200" />
-                <div className="absolute inset-0 rounded-full border-4 border-[#FFD028] border-t-black animate-spin" />
-                <span className="text-lg font-black">⚡</span>
+            <div className="bg-white rounded-3xl p-6 sm:p-8 brutal-border-thick brutal-shadow-lg flex flex-col items-center justify-center text-center">
+              {/* App Icon with Rotating Ring */}
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-4">
+                <div className="absolute -inset-2 rounded-2xl border-2 border-dashed border-black/30 animate-[spin_8s_linear_infinite]" />
+                <div className="w-full h-full rounded-2xl brutal-border overflow-hidden bg-[#FFD028] brutal-shadow-sm flex items-center justify-center animate-bounce">
+                  <Image
+                    src="/icon-192.png"
+                    alt="QUBIX App Icon"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
               </div>
-              <div>
-                <h4 className="text-sm sm:text-base font-black text-black">
-                  Sedang Menyiapkan Media...
-                </h4>
-                <p className="text-xs font-bold text-neutral-500 mt-0.5">
-                  Mengambil link stream kualitas tinggi tanpa watermark
-                </p>
+
+              {/* Status Badge */}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-neutral-100 rounded-full brutal-border text-[11px] font-black uppercase tracking-wider mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="text-neutral-800">Memproses Tautan Media</span>
+              </div>
+
+              {/* Headline & Description */}
+              <h4 className="text-base sm:text-lg font-black text-black">
+                Mengambil Kualitas Terbaik...
+              </h4>
+              <p className="text-xs font-bold text-neutral-500 max-w-md mt-1 mb-4">
+                Menghubungkan ke server CDN, membuang watermark, dan menyiapkan opsi download.
+              </p>
+
+              {/* Progress Bar */}
+              <div className="w-full max-w-xs h-2.5 bg-neutral-100 rounded-full brutal-border overflow-hidden p-0.5">
+                <div className="h-full bg-[#FFD028] rounded-full animate-pulse w-4/5 transition-all duration-500" />
               </div>
             </div>
           </div>

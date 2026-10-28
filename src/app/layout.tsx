@@ -60,9 +60,14 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: [
+      { url: "/icon.png", sizes: "512x512" },
+      { url: "/icon-192.png", sizes: "192x192" },
+    ],
+    shortcut: "/icon-192.png",
+    apple: [
+      { url: "/icon-512.png", sizes: "512x512" },
+    ],
   },
   openGraph: {
     title: "QUBIX — All-in-One Media Downloader | No Watermark HD",
