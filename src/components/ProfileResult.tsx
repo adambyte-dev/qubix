@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { TikTokProfileResponse } from "@/types";
-import { triggerDirectAd } from "@/lib/ad";
 import QrModal from "./QrModal";
 
 interface ProfileResultProps {
@@ -51,6 +50,8 @@ export default function ProfileResult({ data, onReset }: ProfileResultProps) {
           <img
             src={data.avatarHd || data.avatarMedium}
             alt={data.nickname}
+            referrerPolicy="no-referrer"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         </div>
@@ -118,7 +119,6 @@ export default function ProfileResult({ data, onReset }: ProfileResultProps) {
         <a
           href={downloadHdUrl}
           download={`QUBIX_PP_${data.username}_1080p.jpg`}
-          onClick={triggerDirectAd}
           className="py-4 px-5 bg-[#FFD028] hover:bg-[#FFE033] text-black font-black text-sm rounded-xl brutal-btn flex items-center justify-center gap-2.5 text-center"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -130,7 +130,6 @@ export default function ProfileResult({ data, onReset }: ProfileResultProps) {
         <a
           href={downloadMediumUrl}
           download={`QUBIX_PP_${data.username}_720p.jpg`}
-          onClick={triggerDirectAd}
           className="py-4 px-5 bg-white hover:bg-neutral-50 text-black font-black text-sm rounded-xl brutal-border flex items-center justify-center gap-2 text-center"
         >
           <span>Unduh Resolusi Standar (720x720)</span>

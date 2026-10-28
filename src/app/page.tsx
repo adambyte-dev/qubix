@@ -214,6 +214,27 @@ export default function Home({
           heroSubtitle={heroSubtitle}
         />
 
+        {/* Loading Indicator for Mobile & Desktop */}
+        {isLoading && (
+          <div className="w-full max-w-3xl mx-auto mt-6">
+            <div className="bg-white rounded-2xl p-6 brutal-border-thick brutal-shadow flex flex-col items-center justify-center text-center gap-3">
+              <div className="relative w-12 h-12 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full border-4 border-neutral-200" />
+                <div className="absolute inset-0 rounded-full border-4 border-[#FFD028] border-t-black animate-spin" />
+                <span className="text-lg font-black">⚡</span>
+              </div>
+              <div>
+                <h4 className="text-sm sm:text-base font-black text-black">
+                  Sedang Menyiapkan Media...
+                </h4>
+                <p className="text-xs font-bold text-neutral-500 mt-0.5">
+                  Mengambil link stream kualitas tinggi tanpa watermark
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Error Alert Banner */}
         {errorMsg && (
           <div className="w-full max-w-3xl mx-auto mt-4">

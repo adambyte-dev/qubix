@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { triggerDirectAd } from "@/lib/ad";
+import { triggerPlayAd } from "@/lib/ad";
 
 interface VideoTrimmerProps {
   videoUrl: string;
@@ -38,7 +38,6 @@ export default function VideoTrimmer({
 
   // Capture current video frame as Full HD JPG
   const handleCaptureFrame = () => {
-    triggerDirectAd();
     if (!videoRef.current) return;
     const v = videoRef.current;
     const canvas = document.createElement("canvas");
@@ -96,6 +95,7 @@ export default function VideoTrimmer({
         videoRef.current.pause();
         setIsPlaying(false);
       } else {
+        triggerPlayAd();
         if (videoRef.current.currentTime < startTime || videoRef.current.currentTime >= endTime) {
           videoRef.current.currentTime = startTime;
         }
@@ -108,6 +108,7 @@ export default function VideoTrimmer({
   // Play trimmed segment specifically
   const playTrimmedOnly = () => {
     if (videoRef.current) {
+      triggerPlayAd();
       videoRef.current.currentTime = startTime;
       videoRef.current.play();
       setIsPlaying(true);
@@ -198,7 +199,6 @@ export default function VideoTrimmer({
 
   // Client-side instant video slice using MediaRecorder
   const handleExportTrim = async () => {
-    triggerDirectAd();
     const video = videoRef.current;
     if (!video) {
       // Direct URL fallback

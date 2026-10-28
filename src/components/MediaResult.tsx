@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MediaResponse, DownloadOption } from "@/types";
-import { triggerDirectAd } from "@/lib/ad";
+import { triggerPlayAd } from "@/lib/ad";
 import QrModal from "./QrModal";
 import VideoTrimmer from "./VideoTrimmer";
 
@@ -24,48 +24,54 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
     setTimeout(() => setCopiedIdx(null), 2000);
   };
 
-  const primaryVideo = data.downloads.find((d) => d.format === "mp4") || data.downloads[0];
+  const primaryVideo = data.downloads.find((d) => d.format === "mp4");
   const primaryAudio = data.downloads.find((d) => d.format === "mp3");
   const primaryThumb = data.downloads.find((d) => d.format === "jpg");
 
-  const resolutionOptions: DownloadOption[] = [
-    {
-      label: "Video Full HD (1080p)",
-      quality: "1080p MP4 (High Bitrate)",
-      format: "mp4",
-      url: primaryVideo?.url || "",
-    },
-    {
-      label: "Video Standard HD (720p)",
-      quality: "720p MP4 (Balanced)",
-      format: "mp4",
-      url: primaryVideo?.url || "",
-    },
-    {
-      label: "Video Data Saver (480p / 360p)",
-      quality: "SD MP4 (Hemat Kuota)",
-      format: "mp4",
-      url: primaryVideo?.url || "",
-    },
-    {
-      label: "Audio Track High Quality (320kbps)",
-      quality: "MP3 320kbps (Crystal Clear)",
-      format: "mp3",
-      url: primaryAudio?.url || primaryVideo?.url || "",
-    },
-    {
-      label: "Audio Track Standard (128kbps)",
-      quality: "MP3 128kbps (Fast)",
-      format: "mp3",
-      url: primaryAudio?.url || primaryVideo?.url || "",
-    },
-  ];
+  // ponytail: present explicit format options only when streams exist to prevent downloading JPG as MP4
+  const resolutionOptions: DownloadOption[] = [];
 
-  if (primaryThumb) {
-    resolutionOptions.push(primaryThumb);
+  if (primaryVideo) {
+    resolutionOptions.push(
+      {
+        label: "Video Tanpa Watermark (HD)",
+        quality: "1080p MP4 (High Bitrate)",
+        format: "mp4",
+        url: primaryVideo.url,
+      },
+      {
+        label: "Video Standard HD",
+        quality: "720p MP4 (Balanced)",
+        format: "mp4",
+        url: primaryVideo.url,
+      }
+    );
   }
 
-  const effectiveVideoUrl = data.previewVideoUrl || primaryVideo?.url || "";
+  if (primaryAudio) {
+    resolutionOptions.push({
+      label: "Audio Track Original (MP3)",
+      quality: "MP3 320kbps (Crystal Clear)",
+      format: "mp3",
+      url: primaryAudio.url,
+    });
+  }
+
+  if (primaryThumb) {
+    resolutionOptions.push({
+      label: primaryThumb.label || "Cover / Thumbnail Gambar (HD)",
+      quality: primaryThumb.quality || "Original JPG",
+      format: "jpg",
+      url: primaryThumb.url,
+    });
+  }
+
+  // Fallback to raw downloads if no matched formats
+  if (resolutionOptions.length === 0) {
+    resolutionOptions.push(...data.downloads);
+  }
+
+  const effectiveVideoUrl = data.previewVideoUrl || (primaryVideo ? primaryVideo.url : "");
 
   return (
     <div className="w-full bg-white rounded-3xl p-5 sm:p-7 brutal-border-thick brutal-shadow-lg">
@@ -81,10 +87,13 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          {effectiveVideoUrl && (
+          {effectiveVideoUrl && (primaryVideo || data.previewVideoUrl) && (
             <button
               type="button"
-              onClick={() => setShowEditor(!showEditor)}
+              onClick={() => {
+                if (!showEditor) triggerPlayAd();
+                setShowEditor(!showEditor);
+              }}
               className="px-3.5 py-1.5 bg-[#FFD028] hover:bg-[#ffe033] text-black rounded-lg brutal-border text-xs font-black flex items-center gap-1.5 brutal-btn"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -140,6 +149,8 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
               <img
                 src={data.thumbnail}
                 alt={data.title}
+                referrerPolicy="no-referrer"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -172,6 +183,8 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
                   <img
                     src={data.author.avatar}
                     alt={data.author.name}
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
                     className="w-7 h-7 rounded-full brutal-border object-cover"
                   />
                 )}
@@ -202,13 +215,14 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
                 key={pIdx}
                 href={`/api/proxy?url=${encodeURIComponent(photo)}&name=QUBIX_photo_slide_${pIdx + 1}.jpg`}
                 download={`QUBIX_photo_slide_${pIdx + 1}.jpg`}
-                onClick={triggerDirectAd}
                 className="group relative aspect-square rounded-xl overflow-hidden brutal-border bg-neutral-100 block"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={photo}
                   alt={`Slide ${pIdx + 1}`}
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-black transition-opacity gap-1">
@@ -289,7 +303,6 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
                 <a
                   href={dl.url}
                   download
-                  onClick={triggerDirectAd}
                   className="px-3 py-1.5 bg-black text-white text-xs font-black rounded-lg flex items-center gap-1.5 hover:bg-neutral-800"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

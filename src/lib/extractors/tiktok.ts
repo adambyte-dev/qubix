@@ -145,8 +145,48 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
     let coverThumb: string | undefined;
     const photoSlides: string[] = [];
 
-    // Attempt 1: Native TikTok Official Mobile API (Direct unwatermarked stream)
-    if (videoId) {
+    // Attempt 1: TikWM Direct Stream Extraction
+    // ponytail: use tikwm unauthenticated proxy; upgrade to rotating mobile proxies if upstream blocks
+    try {
+      const tikwmRes = await fetch("https://www.tikwm.com/api/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "User-Agent": BROWSER_UA,
+        },
+        body: new URLSearchParams({ url: targetUrl }),
+      });
+      if (tikwmRes.ok) {
+        const tikData = await tikwmRes.json();
+        if (tikData.code === 0 && tikData.data) {
+          const item = tikData.data;
+          title = item.title || title;
+          if (item.author) {
+            authorName = item.author.nickname || authorName;
+            authorUsername = item.author.unique_id || authorUsername;
+            authorAvatar = item.author.avatar || authorAvatar;
+          }
+          coverThumb = item.cover || coverThumb;
+          if (item.play) {
+            directVideoUrl = item.play.startsWith("http") ? item.play : `https://www.tikwm.com${item.play}`;
+          }
+          if (item.music) {
+            directAudioUrl = item.music.startsWith("http") ? item.music : `https://www.tikwm.com${item.music}`;
+          }
+          if (Array.isArray(item.images)) {
+            for (const img of item.images) {
+              const fullImg = img.startsWith("http") ? img : `https://www.tikwm.com${img}`;
+              photoSlides.push(fullImg);
+            }
+          }
+        }
+      }
+    } catch {
+      // Non-blocking, fallback to Native Mobile API
+    }
+
+    // Attempt 2: Native TikTok Official Mobile API (Direct unwatermarked stream fallback)
+    if (!directVideoUrl && videoId) {
       try {
         const feedApi = `https://api22-normal-c-alisg.tiktokv.com/aweme/v1/feed/?aweme_id=${videoId}&iid=7318518857994389254&device_id=7318517321748022790&channel=googleplay&app_name=musical_ly&version_code=300904&device_platform=android&device_type=Pixel%207`;
         const apiRes = await fetch(feedApi, {
@@ -192,7 +232,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
       }
     }
 
-    // Attempt 2: Official TikTok oEmbed for title & creator
+    // Attempt 3: Official TikTok oEmbed for title & creator
     if (!title) {
       try {
         const oembedRes = await fetch(
@@ -209,7 +249,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
       }
     }
 
-    // Attempt 3: OpenGraph fallback
+    // Attempt 4: OpenGraph fallback
     if (!directVideoUrl || !coverThumb) {
       try {
         const htmlRes = await fetch(targetUrl, {

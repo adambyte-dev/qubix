@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Whitelist CDN domain to prevent open proxy / SSRF abuse
-    const ALLOWED_CDN = /tiktok|byte|instagram|fbcdn|twimg|twitter|x\.com|youtube|googlevideo|ytimg|pinterest|pinimg|reddit|redd\.it|threads|capcut|sndcdn|soundcloud/i;
+    const ALLOWED_CDN = /tiktok|byte|tikwm|instagram|fbcdn|twimg|twitter|x\.com|youtube|googlevideo|ytimg|pinterest|pinimg|reddit|redd\.it|threads|capcut|sndcdn|soundcloud/i;
     if (!ALLOWED_CDN.test(parsed.hostname)) {
       return NextResponse.json({ error: "Domain target tidak diizinkan." }, { status: 403 });
     }
@@ -38,6 +38,8 @@ export async function GET(request: NextRequest) {
     let referer = "";
     if (parsed.hostname.includes("tiktok") || parsed.hostname.includes("byteicdn") || parsed.hostname.includes("ibytedtos")) {
       referer = "https://www.tiktok.com/";
+    } else if (parsed.hostname.includes("tikwm")) {
+      referer = "https://www.tikwm.com/";
     } else if (parsed.hostname.includes("youtube") || parsed.hostname.includes("ytimg") || parsed.hostname.includes("googlevideo")) {
       referer = "https://www.youtube.com/";
     } else if (parsed.hostname.includes("instagram") || parsed.hostname.includes("cdninstagram")) {
