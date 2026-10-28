@@ -1,4 +1,5 @@
 import { MediaResponse } from "@/types";
+import { formatMediaFilename } from "../utils";
 
 export function extractYouTubeId(url: string): string | null {
   const clean = url.trim();
@@ -44,19 +45,22 @@ export async function extractYouTubeMedia(url: string): Promise<MediaResponse> {
     const maxResThumb = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const hqThumb = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
+    const thumbFhd = formatMediaFilename(`${title}-1080p`, "image", "jpg");
+    const thumbHq = formatMediaFilename(`${title}-hq`, "image", "jpg");
+
     // Authentic, uncorrupted direct media files
     const downloads = [
       {
         label: "Cover Thumbnail Ultra HD (1080p)",
         quality: "1920x1080 Full HD JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(maxResThumb)}&name=QUBIX_youtube_${videoId}_1080p.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(maxResThumb)}&name=${encodeURIComponent(thumbFhd)}`,
       },
       {
         label: "Cover Thumbnail High Quality",
         quality: "640x480 HQ JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(hqThumb)}&name=QUBIX_youtube_${videoId}_hq.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(hqThumb)}&name=${encodeURIComponent(thumbHq)}`,
       },
     ];
 

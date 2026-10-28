@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MediaResponse, DownloadOption } from "@/types";
 import { triggerPlayAd } from "@/lib/ad";
+import { formatMediaFilename } from "@/lib/utils";
 import QrModal from "./QrModal";
 import VideoTrimmer from "./VideoTrimmer";
 
@@ -210,29 +211,32 @@ export default function MediaResult({ data, onReset }: MediaResultProps) {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {data.photos.map((photo, pIdx) => (
-              <a
-                key={pIdx}
-                href={`/api/proxy?url=${encodeURIComponent(photo)}&name=QUBIX_photo_slide_${pIdx + 1}.jpg`}
-                download={`QUBIX_photo_slide_${pIdx + 1}.jpg`}
-                className="group relative aspect-square rounded-xl overflow-hidden brutal-border bg-neutral-100 block"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo}
-                  alt={`Slide ${pIdx + 1}`}
-                  referrerPolicy="no-referrer"
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-black transition-opacity gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  <span>Unduh</span>
-                </div>
-              </a>
-            ))}
+            {data.photos.map((photo, pIdx) => {
+              const slideFilename = formatMediaFilename(data.title, "slide", "jpg", pIdx + 1);
+              return (
+                <a
+                  key={pIdx}
+                  href={`/api/proxy?url=${encodeURIComponent(photo)}&name=${encodeURIComponent(slideFilename)}`}
+                  download={slideFilename}
+                  className="group relative aspect-square rounded-xl overflow-hidden brutal-border bg-neutral-100 block"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={photo}
+                    alt={`Slide ${pIdx + 1}`}
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-black transition-opacity gap-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>Unduh</span>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       )}

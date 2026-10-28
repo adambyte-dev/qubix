@@ -1,5 +1,5 @@
 import { MediaResponse, TikTokProfileResponse } from "@/types";
-import { extractTikTokUsername } from "../utils";
+import { extractTikTokUsername, formatMediaFilename } from "../utils";
 
 const SOCIAL_UA = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)";
 const BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
@@ -273,6 +273,11 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
       }
     }
 
+    const finalTitle = title || `TikTok Video by ${authorName}`;
+    const videoFilename = formatMediaFilename(finalTitle, "video", "mp4");
+    const audioFilename = formatMediaFilename(finalTitle, "music", "mp3");
+    const coverFilename = formatMediaFilename(finalTitle, "image", "jpg");
+
     const downloads = [];
 
     // 1. Direct unwatermarked video
@@ -281,7 +286,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Video Tanpa Watermark (HD)",
         quality: "HD 1080p MP4",
         format: "mp4" as const,
-        url: `/api/proxy?url=${encodeURIComponent(directVideoUrl)}&name=QUBIX_tiktok_${videoId || "video"}.mp4`,
+        url: `/api/proxy?url=${encodeURIComponent(directVideoUrl)}&name=${encodeURIComponent(videoFilename)}`,
       });
     }
 
@@ -291,7 +296,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Audio Track Original (MP3)",
         quality: "Audio 320kbps",
         format: "mp3" as const,
-        url: `/api/proxy?url=${encodeURIComponent(directAudioUrl)}&name=QUBIX_tiktok_audio_${videoId || "sound"}.mp3`,
+        url: `/api/proxy?url=${encodeURIComponent(directAudioUrl)}&name=${encodeURIComponent(audioFilename)}`,
       });
     }
 
@@ -301,7 +306,7 @@ export async function extractTikTokMedia(url: string): Promise<MediaResponse> {
         label: "Cover / Thumbnail HD",
         quality: "Original JPG",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(coverThumb)}&name=QUBIX_tiktok_cover_${videoId || "img"}.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(coverThumb)}&name=${encodeURIComponent(coverFilename)}`,
       });
     }
 

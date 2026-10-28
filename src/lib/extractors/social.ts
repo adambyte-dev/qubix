@@ -1,4 +1,5 @@
 import { MediaResponse, SupportedPlatform } from "@/types";
+import { formatMediaFilename } from "../utils";
 
 const SOCIAL_UA = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)";
 
@@ -35,13 +36,15 @@ export async function extractSocialMedia(url: string, platform: SupportedPlatfor
     const mediaVideo = ogVideo ? ogVideo[1].replace(/&amp;/g, "&") : undefined;
 
     const downloads = [];
+    const videoFilename = formatMediaFilename(title, "video", "mp4");
+    const imageFilename = formatMediaFilename(title, "image", "jpg");
 
     if (mediaVideo) {
       downloads.push({
         label: "Video Original (HD)",
         quality: "HD Stream",
         format: "mp4" as const,
-        url: `/api/proxy?url=${encodeURIComponent(mediaVideo)}&name=QUBIX_${platform}_video.mp4`,
+        url: `/api/proxy?url=${encodeURIComponent(mediaVideo)}&name=${encodeURIComponent(videoFilename)}`,
       });
     }
 
@@ -50,7 +53,7 @@ export async function extractSocialMedia(url: string, platform: SupportedPlatfor
         label: "Media / Cover Gambar (HD)",
         quality: "High Resolution",
         format: "jpg" as const,
-        url: `/api/proxy?url=${encodeURIComponent(mediaThumb)}&name=QUBIX_${platform}_media.jpg`,
+        url: `/api/proxy?url=${encodeURIComponent(mediaThumb)}&name=${encodeURIComponent(imageFilename)}`,
       });
     }
 

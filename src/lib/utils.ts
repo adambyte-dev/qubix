@@ -35,3 +35,25 @@ export function extractTikTokUsername(input: string): string {
   // Otherwise clean string
   return clean.replace(/[^a-zA-Z0-9_.-]/g, "");
 }
+
+/**
+ * ponytail: sanitize filename to clean alphanumeric slug; upgrade with international transliteration if non-Latin scripts needed
+ */
+export function formatMediaFilename(
+  title: string | undefined,
+  type: "video" | "music" | "image" | "slide" | "profile" | "clip" | "frame",
+  ext: string,
+  index?: number
+): string {
+  const cleanTitle = (title || "")
+    .toLowerCase()
+    .replace(/[#@][\w-]+/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 35)
+    .replace(/-+$/, "");
+
+  const slug = cleanTitle || "media";
+  const indexPrefix = typeof index === "number" ? `-${String(index).padStart(2, "0")}` : "";
+  return `qubix-${type}${indexPrefix}-${slug}.${ext}`;
+}

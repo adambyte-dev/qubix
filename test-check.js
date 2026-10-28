@@ -19,4 +19,30 @@ assert.strictEqual(testAdTrigger(1000), true, "First play must trigger ad");
 assert.strictEqual(testAdTrigger(2000), false, "Subsequent fast plays must be throttled");
 assert.strictEqual(testAdTrigger(1000 + 6 * 60 * 1000), true, "Play after 5m cooldown can trigger ad");
 
+// 3. Verify professional minimalist filename formatting
+function formatMediaFilename(title, type, ext, index) {
+  const cleanTitle = (title || "")
+    .toLowerCase()
+    .replace(/[#@][\w-]+/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 35)
+    .replace(/-+$/, "");
+  const slug = cleanTitle || "media";
+  const indexPrefix = typeof index === "number" ? `-${String(index).padStart(2, "0")}` : "";
+  return `qubix-${type}${indexPrefix}-${slug}.${ext}`;
+}
+assert.strictEqual(
+  formatMediaFilename("Amazing Dance Moves! #fyp #viral", "video", "mp4"),
+  "qubix-video-amazing-dance-moves.mp4"
+);
+assert.strictEqual(
+  formatMediaFilename("Soundtrack Original (feat. DJ)", "music", "mp3"),
+  "qubix-music-soundtrack-original-feat-dj.mp3"
+);
+assert.strictEqual(
+  formatMediaFilename("Photo Slideshow", "slide", "jpg", 3),
+  "qubix-slide-03-photo-slideshow.jpg"
+);
+
 console.log("All self-checks passed.");
