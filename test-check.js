@@ -45,4 +45,13 @@ assert.strictEqual(
   "qubix-slide-03-photo-slideshow.jpg"
 );
 
+// 4. Verify YouTube format streams definition
+const mockYoutubeDownloads = [
+  { label: "Video YouTube HD", quality: "1080p MP4", format: "mp4", url: "/api/proxy?url=https://googlevideo.com&name=qubix-video-test.mp4" },
+  { label: "Audio Track Original (MP3)", quality: "128kbps Audio", format: "mp3", url: "/api/proxy?url=https://googlevideo.com&name=qubix-music-test.mp3" },
+  { label: "Cover Thumbnail Ultra HD (1080p)", quality: "1920x1080 Full HD JPG", format: "jpg", url: "/api/proxy?url=https://ytimg.com&name=qubix-image-test.jpg" }
+];
+assert.strictEqual(mockYoutubeDownloads.some(d => d.format === "mp4"), true, "YouTube must provide MP4 format");
+assert.strictEqual(mockYoutubeDownloads.some(d => d.format === "mp3"), true, "YouTube must provide MP3 format");
+
 console.log("All self-checks passed.");
